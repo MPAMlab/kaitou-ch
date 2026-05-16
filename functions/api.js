@@ -1,14 +1,13 @@
 export async function onRequestGet(context) {
     const db = context.env.DB;
     if (!db) {
+        console.error('D1 database binding "DB" not found. Please check your Cloudflare Pages settings.');
         return new Response('D1 database binding "DB" not found', { status: 500 });
     }
 
     try {
-        // We'll use a table named 'kaitou_ch_vote' with 'option_name' and 'count' columns
         const results = await db.prepare("SELECT option_name, count FROM kaitou_ch_vote").all();
         
-        // Transform array results into the expected object format: { Yes: X, No: Y }
         const data = { Yes: 0, No: 0 };
         results.results.forEach(row => {
             if (row.option_name === 'Yes' || row.option_name === 'No') {
@@ -23,7 +22,7 @@ export async function onRequestGet(context) {
             }
         });
     } catch (e) {
-        // If the table doesn't exist yet, we'll return initialized zeros
+        console.error('Error in GET /api:', e.message);
         if (e.message.includes('no such table')) {
             return new Response(JSON.stringify({ Yes: 0, No: 0 }), {
                 headers: { 
@@ -39,6 +38,7 @@ export async function onRequestGet(context) {
 export async function onRequestPost(context) {
     const db = context.env.DB;
     if (!db) {
+        console.error('D1 database binding "DB" not found. Please check your Cloudflare Pages settings.');
         return new Response('D1 database binding "DB" not found', { status: 500 });
     }
 
@@ -49,8 +49,6 @@ export async function onRequestPost(context) {
             return new Response('Bad Request: Invalid option', { status: 400 });
         }
 
-        // Use UPSERT logic (atomic increment)
-        // This query increments the count if the option exists, or inserts it with count 1 if it doesn't.
         await db.prepare(`
             INSERT INTO kaitou_ch_vote (option_name, count) 
             VALUES (?, 1) 
@@ -62,6 +60,7 @@ export async function onRequestPost(context) {
             headers: { 'Access-Control-Allow-Origin': '*' }
         });
     } catch (e) {
+        console.error('Error in POST /api:', e.message);
         return new Response(`Error updating vote: ${e.message}`, { status: 500 });
     }
 }
