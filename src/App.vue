@@ -20,12 +20,17 @@
         <p5-button>
           <p5-title :content="$t('buttons.no')" :animation="true" font_color="#ff0022" selected_font_color="#000" selected_bg_color="#ff0022" @click="postOption('No')"></p5-title>
         </p5-button>
-  </div>
-</div>
+      </div>
+      <div class="lang-switch">
+        <span @click="setLocale('cn')" :class="{ active: $i18n.locale === 'cn' }">CN</span> /
+        <span @click="setLocale('jp')" :class="{ active: $i18n.locale === 'jp' }">JP</span> /
+        <span @click="setLocale('en')" :class="{ active: $i18n.locale === 'en' }">EN</span>
+      </div>
+    </div>
 <div class="footer">
       <p style="color: grey;" id="debug"></p>
       <!--<p style="color: grey;" id="date"></p>-->
-      <p style="color: grey;">Powered by <a href="https://cloudflare.com">Cloudflare Pages, Worker, R2</a>, <a href="https://vuejs.org/">Vue.JS</a> & <a href="https://github.com/q-mona/p5-ui">p5-ui</a>. Maintained by <a href="http://MPAM-Lab.xyz">MPAM Lab</a>. </p>
+      <p style="color: grey;">Powered by <a href="https://cloudflare.com">Cloudflare Pages, Worker, R2</a>, <a href="https://vuejs.org/">Vue.JS</a> & <a href="https://github.com/q-mona/p5-ui">p5-ui</a>. Maintained by <a href="http://MPAM-Lab.xyz">A/E Dept., MPAM Lab</a>. </p>
       <p style="color: grey;">This is a fan site. Original Credit by (c)Atlus, SEGA <a href="https://github.com/nonefffds/kaitou-ch">Open-sourced at GitHub</a></p>
       <p style="color: grey;">This site uses cookie to count time for voting and will not be used in tracking users' identity.</p>
     </div>
@@ -43,9 +48,14 @@
     let progress = ref(0); // Declare progress here
     let percentage = ref(0);
     let questionText = ref('');
-    const { t } = useI18n();
+    const { t, locale } = useI18n();
     const workerUrl = '/api';
     
+    const setLocale = (newLocale) => {
+      locale.value = newLocale;
+      changeQuestion();
+    };
+
     const postOption = async (option) => {
       const lastVoteTime = getCookie("LastVoteTime"); // Get the value of the "LastVoteTime" cookie
 
@@ -81,7 +91,8 @@
         const data = response.data;
 
         const { Yes, No } = data;
-        progress.value = Math.floor(Yes / (Yes + No) * 100);
+        const total = Yes + No;
+        progress.value = total > 0 ? Math.floor(Yes / total * 100) : 0;
         percentage = progress.value;
 
         const numberDisplay = document.getElementById("percentage");
@@ -151,12 +162,31 @@
         percentage,
         postOption,
         questionText,
+        setLocale
       }
     }
   }
   </script>
 
   <style>
+  .lang-switch {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+    font-family: 'Contrail One', sans-serif;
+  }
+  .lang-switch span {
+    cursor: pointer;
+    padding: 0 5px;
+    transition: color 0.3s;
+  }
+  .lang-switch span:hover {
+    color: #ff0022;
+  }
+  .lang-switch span.active {
+    color: #ff0022;
+    text-decoration: underline;
+  }
   .wrapper {
   max-width: 1500px;
   padding: 0px;
