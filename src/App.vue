@@ -30,7 +30,7 @@
 <div class="footer">
       <p style="color: grey;" id="debug"></p>
       <!--<p style="color: grey;" id="date"></p>-->
-      <p style="color: grey;">Powered by <a href="https://cloudflare.com">Cloudflare Pages, Worker, R2</a>, <a href="https://vuejs.org/">Vue.JS</a> & <a href="https://github.com/q-mona/p5-ui">p5-ui</a>. Maintained by <a href="http://MPAM-Lab.xyz">A/E Dept., MPAM Lab</a>. </p>
+      <p style="color: grey;">Powered by <a href="https://cloudflare.com">Cloudflare Pages, Worker, D1</a>, <a href="https://vuejs.org/">Vue.JS</a> & <a href="https://github.com/q-mona/p5-ui">p5-ui</a>. Maintained by <a href="http://MPAM-Lab.xyz">A/E Dept., MPAM Lab</a>. </p>
       <p style="color: grey;">This is a fan site. Original Credit by (c)Atlus, SEGA <a href="https://github.com/nonefffds/kaitou-ch">Open-sourced at GitHub</a></p>
       <p style="color: grey;">This site uses cookie to count time for voting and will not be used in tracking users' identity.</p>
     </div>

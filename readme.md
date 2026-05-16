@@ -2,7 +2,11 @@
 
 A serverless try for a voting web app, a fan-made site derived from Persona 5.
 
-Powered by AWS S3, Lambda(./Server), Amplify(prod. env), Vercel (test&dev env), Vue.JS w/ p5-ui.
+Powered by Cloudflare Pages, Cloudflare D1, Vue.JS w/ p5-ui.
+
+https://kaitou-ch.srt.pub
+
+Please note: You can only vote once per minute. The result will not refresh unless I personally wanted though.
 
 ## to-do:
 
@@ -13,3 +17,5 @@ Powered by AWS S3, Lambda(./Server), Amplify(prod. env), Vercel (test&dev env), 
 5. jpn & en support (Vue I18n)
 6. divide CSS and JS to other documents
 7. enrich this Readme (incl. Deployments etc.)
+
+Maybe one day the percentage can be changed by date it gone so we can have a GAME mode, and voted by website viewers like current situation which is REAL mode. Depend on if I have more time to spend on this.
