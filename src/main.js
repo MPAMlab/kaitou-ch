@@ -10,7 +10,7 @@ import messages from './assets/messages';
 // Create the i18n instance with the messages
 const i18n = createI18n({
     legacy: false,
-    locale: 'zh', // Set default locale
+    locale: 'cn', // Set default locale
     fallbackLocale: 'en', // Set fallback locale
     messages: messages, // Set the messages
 })
